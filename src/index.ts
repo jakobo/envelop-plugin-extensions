@@ -19,11 +19,13 @@ const asArray = <T>(x: T | T[]): T[] => (Array.isArray(x) ? x : [x]);
  */
 export function useExtensions(): Plugin<ExtensionsContext> {
   return {
-    onExecute(c) {
-      const data = new Map<string, unknown>();
+    onEnveloped(c) {
       c.extendContext({
-        extensions: data,
+        extensions: new Map<string, unknown>(),
       });
+    },
+    onExecute(c) {
+      const data = c.args.contextValue.extensions;
 
       return {
         async onExecuteDone({ result }) {
