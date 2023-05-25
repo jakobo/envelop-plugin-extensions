@@ -1,7 +1,7 @@
 {
   "name": "envelop-plugin-extensions",
   "description": "Set extensions via your GraphQL Context",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "author": "Jakob Heuser",
   "license": "MIT",
   "homepage": "https://github.com/jakobo/envelop-plugin-extensions/",
