@@ -7,7 +7,7 @@ module.exports = {
   ],
 
   "./src/**/*.{cjs,mjs,js,jsx,ts,tsx}": [
-    "eslint --fix",
+    "xo --fix",
     () => `tsc --project ./tsconfig.json --noEmit`,
     "prettier --write",
   ],

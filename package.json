@@ -9,14 +9,14 @@
   "scripts": {
     "build": "run-s tsup",
     "clean": "shx rm -rf dist && shx mkdir dist",
-    "eslint": "eslint",
     "lint-staged": "lint-staged",
     "prepare": "husky install",
     "rel": "release-it",
     "sp": "syncpack",
     "test": "ava",
     "tsup": "tsup",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "xo": "xo"
   },
   "tsup": {
     "entry": {
@@ -62,14 +62,7 @@
     "@graphql-tools/schema": "^9.0.17",
     "@types/jest": "^29.5.0",
     "@types/node": "^18.14.2",
-    "@typescript-eslint/eslint-plugin": "^5.40.1",
-    "@typescript-eslint/parser": "^5.40.1",
     "ava": "^5.2.0",
-    "eslint": "^8.34.0",
-    "eslint-config-prettier": "^8.6.0",
-    "eslint-import-resolver-typescript": "^2.7.1",
-    "eslint-plugin-import": "^2.27.5",
-    "eslint-plugin-node": "^11.1.0",
     "graphql": "^16.6.0",
     "husky": "^7.0.4",
     "lint-staged": "13.0.3",
@@ -80,7 +73,8 @@
     "syncpack": "^7.2.1",
     "ts-node": "^10.9.1",
     "tsup": "^6.2.3",
-    "typescript": "^4.8.3"
+    "typescript": "^5.0.4",
+    "xo": "^0.54.2"
   },
   "peerDependencies": {
     "@envelop/core": "3.*",
@@ -92,5 +86,12 @@
     "graphql",
     "plugin",
     "yoga"
-  ]
+  ],
+  "pnpm": {
+    "peerDependencyRules": {
+      "ignoreMissing": [
+        "webpack"
+      ]
+    }
+  }
 }

@@ -1,14 +1,14 @@
 import test from "ava";
 import { createTestkit, assertSingleExecutionValue } from "@envelop/testing";
-import { useExtensions } from "../src/index.js";
 import { makeExecutableSchema } from "@graphql-tools/schema";
+import { useExtensions } from "../src/index.js";
 
 test("useExtensions", async (t) => {
   const schema = makeExecutableSchema({
     typeDefs: `type Query { foo: String }`,
     resolvers: {
       Query: {
-        foo: (p, a, c, i) => {
+        foo(p, a, c: { extensions: Map<string, string> }, i) {
           c.extensions.set("ext1", "extval1");
           return "foo";
         },

@@ -1,13 +1,13 @@
-import { ExecutionResult } from "graphql";
-import { isAsyncIterable, Plugin } from "@envelop/core";
+import { type ExecutionResult } from "graphql";
+import { isAsyncIterable, type Plugin } from "@envelop/core";
 
 /** The extensions object complies with the GraphQL `extensions` specification */
 export type Extensions = Map<string, unknown>;
 
 /** The additional context properties exposing the extensions plugin api */
-export interface ExtensionsContext {
+export type ExtensionsContext = {
   extensions: Extensions;
-}
+};
 
 // helper to force an object to an array
 const asArray = <T>(x: T | T[]): T[] => (Array.isArray(x) ? x : [x]);
@@ -50,12 +50,15 @@ export function useExtensions(): Plugin<ExtensionsContext> {
             const itt = result[Symbol.asyncIterator]();
             let next: Awaited<ReturnType<(typeof itt)["next"]>>;
 
+            // eslint-disable-next-line no-await-in-loop
             while ((next = await itt.next())) {
               if (next.done) {
                 break;
               }
+
               attach(next.value);
             }
+
             return;
           }
 

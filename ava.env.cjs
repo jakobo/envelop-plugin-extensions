@@ -1,4 +1,4 @@
-/* eslint-disable */
+import process from "node:process";
 
 // https://github.com/nodejs/node/issues/30810
 
@@ -19,5 +19,5 @@ process.emit = function (name, data, ...args) {
   )
     return false;
 
-  return originalEmit.apply(process, arguments);
+  return originalEmit.apply(process, args);
 };
