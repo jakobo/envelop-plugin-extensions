@@ -41,7 +41,7 @@ const yoga = createYoga({
       },
     },
   }),
-  plugins: [useExtensions()],
+  plugins: [useExtensions(options)],
 });
 
 // Start the server and explore http://localhost:4000/graphql
@@ -63,6 +63,10 @@ And see the `extensions` property carried into the response:
   }
 }
 ```
+
+# Options
+
+- `filter: (key: string, value: unknown) => boolean` - Allows filtering extensions by top-level key. Not all extensions should be surfaced, and `filter()` gives you a means to run a test against every key/value before the extensions are written to the graphql response. _TypeScript Users: the type for `value` is `unknown`, and it's expected if you're checking extension values you have suitable typeguards or validators._
 
 # License
 
