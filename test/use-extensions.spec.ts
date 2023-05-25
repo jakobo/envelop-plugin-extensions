@@ -10,13 +10,23 @@ test("useExtensions", async (t) => {
       Query: {
         foo(p, a, c: { extensions: Map<string, string> }, i) {
           c.extensions.set("ext1", "extval1");
+          c.extensions.set("alternate/ext2", "extval2");
           return "foo";
         },
       },
     },
   });
 
-  const testInstance = createTestkit([useExtensions()], schema);
+  const testInstance = createTestkit(
+    [
+      useExtensions({
+        filter(key) {
+          return !key.startsWith("alternate/");
+        },
+      }),
+    ],
+    schema
+  );
 
   const result = await testInstance.execute(
     `query { foo }`,
@@ -27,8 +37,13 @@ test("useExtensions", async (t) => {
   );
 
   assertSingleExecutionValue(result);
-  t.is(result.errors, undefined);
-  t.truthy(result.data);
-  t.truthy(result.extensions);
-  t.is(result.extensions?.ext1, "extval1");
+  t.truthy(result.data, "runs a query successfully");
+  t.is(result.errors, undefined, "has no errors from graphql");
+  t.truthy(result.extensions, "sets extensions");
+  t.is(result.extensions?.ext1, "extval1", "extensions are saved");
+  t.is(
+    result.extensions?.["alternate/ext2"],
+    undefined,
+    "can filter extensions"
+  );
 });

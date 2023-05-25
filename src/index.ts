@@ -9,6 +9,10 @@ export type ExtensionsContext = {
   extensions: Extensions;
 };
 
+export type Options = {
+  filter?: (key: string, value: unknown) => boolean;
+};
+
 // helper to force an object to an array
 const asArray = <T>(x: T | T[]): T[] => (Array.isArray(x) ? x : [x]);
 
@@ -17,7 +21,7 @@ const asArray = <T>(x: T | T[]): T[] => (Array.isArray(x) ? x : [x]);
  * context. Adds one property to the context `extensions` which is of type
  * `Map<string, unknown>`.
  */
-export function useExtensions(): Plugin<ExtensionsContext> {
+export function useExtensions(options?: Options): Plugin<ExtensionsContext> {
   return {
     onEnveloped(c) {
       c.extendContext({
@@ -38,6 +42,8 @@ export function useExtensions(): Plugin<ExtensionsContext> {
 
             for (const [key, value] of data) {
               if (typeof sr.extensions === "object" && sr.extensions !== null) {
+                if (options?.filter?.(key, value) === false) continue;
+
                 sr.extensions[key] = value;
               }
             }

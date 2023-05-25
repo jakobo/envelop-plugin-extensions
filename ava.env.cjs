@@ -1,4 +1,4 @@
-import process from "node:process";
+const process = require("node:process");
 
 // https://github.com/nodejs/node/issues/30810
 
